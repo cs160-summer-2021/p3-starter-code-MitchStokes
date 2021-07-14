@@ -19,6 +19,9 @@
 			top: 0;
 		}
 
+		#s1 {
+			 
+		}
 		.swatch {
 			width: 24px;
 			height: 24px;
@@ -35,14 +38,105 @@
 		    margin-right: auto;
 		    display: block;
 		}
+
+		#strokesetter {
+			margin-top: 10px;
+    		margin-left: 42.5%;
+    		width: 15%;
+    		height: 25px;
+		}
+
+		#erasersetter {
+			margin-top: 10px;
+    		margin-left: 42.5%;
+    		width: 15%;
+    		height: 50px;
+		}
+
+		#swtext {
+			margin-top: 10px;
+			text-align: center;
+		}
+		#eraser {
+			margin-top: 20px;
+			text-align: center;
+		}
+
+		#s1 {
+			float: left;
+		}
+		#s5 {
+			margin-left: 10px;
+			float: left;
+		}
+		#s10 {
+			margin-left: 10px;
+			float: left;
+		}
+		#s15 {
+			margin-left: 10px;
+			float: left;
+		}
+		#s20 {
+			margin-left: 10px;
+			float: left;
+		}
+		#e3 {
+			float: left;
+		}
+		#e8 {
+			margin-left: 50px;
+			float: left;
+		}
+		#e13 {
+			margin-left: 50px;
+			float: left;
+		}
 	</style>
 
 	<script type="text/javascript" canvas="canvas">
 
 
 		window.onload = function() {
+			$(document).ready(function() {
+				$(document).on('click', '#s1', function(){
+					eraserMode = false;
+					sw = 1;
+				});
+				$(document).on('click', '#s5', function(){
+					eraserMode = false;
+					sw = 5;
+				});
+				$(document).on('click', '#s10', function(){
+					eraserMode = false;
+					sw = 10;
+				});
+				$(document).on('click', '#s15', function(){
+					eraserMode = false;
+					sw = 15;
+				});
+				$(document).on('click', '#s20', function(){
+					eraserMode = false;
+					sw = 20;
+				});
+				$(document).on('click', '#e3', function(){
+					eraserMode = true;
+					r = 3;
+				});
+				$(document).on('click', '#e8', function(){
+					eraserMode = true;
+					r = 8;
+				});
+				$(document).on('click', '#e13', function(){
+					eraserMode = true;
+					r = 13;
+				});
+			});
 			var canvas = document.getElementById('myCanvas');
 			var myPath;
+			var sw = 1;
+			var r = 13;
+			var eraserMode = false;
 
 
 			// coloring page
@@ -62,8 +156,16 @@
 			function myCustomInteraction() {
 				var tool = new paper.Tool();
 				tool.onMouseDown = function(event) {
-					myPath = new paper.Path();
-					myPath.strokeColor = cp.history[cp.history.length - 1];
+					if (eraserMode) {
+						myPath = new paper.Path();
+						myPath.strokeColor = 'white';
+						myPath.strokeWidth = r;
+					}
+					else{
+						myPath = new paper.Path();
+						myPath.strokeColor = cp.history[cp.history.length - 1];
+						myPath.strokeWidth = sw;
+					}
 				};
 				tool.onMouseDrag = function(event) {
 					myPath.add(event.point);
@@ -114,6 +216,40 @@
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
 	<div id="color-palette"></div>
+	<div id = "swtext">
+		Stroke width
+	</div>
+	<div id = "strokesetter">
+		<div id = "s1">
+			<img src="{% static './coloring/images/1.jpg' %}" width="45"/>
+		</div>
+		<div id = "s5">
+			<img src="{% static './coloring/images/5.jpg' %}" width="45"/>
+		</div>
+		<div id = "s10">
+			<img src="{% static './coloring/images/10.jpg' %}" width="45"/>
+		</div>
+		<div id = "s15">
+			<img src="{% static './coloring/images/15.jpg' %}" width="45"/>
+		</div>
+		<div id = "s20">
+			<img src="{% static './coloring/images/20.jpg' %}" width="45"/>
+		</div>
+	</div>
+	<div id = "eraser">
+		Eraser Size
+	</div>
+	<div id = "erasersetter">
+		<div id = "e3">
+			<img src="{% static './coloring/images/e3.jpg' %}" width="45"/>
+		</div>
+		<div id = "e8">
+			<img src="{% static './coloring/images/e8.jpg' %}" width="45"/>
+		</div>
+		<div id = "e13">
+			<img src="{% static './coloring/images/e13.jpg' %}" width="45"/>
+		</div>
+	</div>
 </body>
 
 </html>
