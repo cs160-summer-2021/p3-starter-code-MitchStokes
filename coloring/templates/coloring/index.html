@@ -38,8 +38,12 @@
 	</style>
 
 	<script type="text/javascript" canvas="canvas">
+
+
 		window.onload = function() {
 			var canvas = document.getElementById('myCanvas');
+			var myPath;
+
 
 			// coloring page
 			var mandala = {
@@ -57,14 +61,12 @@
 
 			function myCustomInteraction() {
 				var tool = new paper.Tool();
-
-				tool.onMouseDown = function (event) {
-				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
-				    if (hit) {
-				    		// Color pallette keeps track of the full history of colors, though we
-				    		// only color in with the most-recent color.
-				        hit.item.fillColor = cp.history[cp.history.length - 1];
-				    }
+				tool.onMouseDown = function(event) {
+					myPath = new paper.Path();
+					myPath.strokeColor = cp.history[cp.history.length - 1];
+				};
+				tool.onMouseDrag = function(event) {
+					myPath.add(event.point);
 				}
 			}
 
@@ -74,10 +76,10 @@
 				// create a swatch for each color
 				for (var i = colors.length - 1; i >= 0; i--) {
 					var $swatch = $("<div>").css("background-color", colors[i])
-									   .addClass("swatch");
+									.addClass("swatch");
 					$swatch.click(function(){
 						// add color to the color palette history
-					  	cp.history.push($(this).css("background-color"));
+						cp.history.push($(this).css("background-color"));
 					});
 					cp.$container.append($swatch);
 				}
@@ -95,31 +97,23 @@
 				});
 			}
 
-			function init(custom){
+			function init(){
 				paper.setup(canvas);
 				getColorsCreatePalette();
-
-				paper.project.importSVG(mandala.filePath, function(item) {
-					mandala.item = item._children["design-freepik"];
-				    paper.project.insertLayer(0,mandala.item);
-
-				    if (custom) {
-				    	myCustomInteraction();
-				    } else {
-				    	myGradientInteraction();
-				    }
-
-				});
+				myCustomInteraction();
 			}
 
 			// Set up the mandala interactivity.
-			init(true);
+			init();
 		}
+
 	</script>
 </head>
+
 <body>
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
 	<div id="color-palette"></div>
 </body>
+
 </html>
