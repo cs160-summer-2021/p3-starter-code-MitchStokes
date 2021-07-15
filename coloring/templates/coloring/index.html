@@ -4,14 +4,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  	<title>P3 Coloring</title>
+  	<title>Forget-Me-Not</title>
 
 	<script src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script src="{% static 'coloring/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
 
 	<style type="text/css">
-
 		body {
 			background-image: url("/static/coloring/images/bg.jpg");
 			background-repeat: repeat;
@@ -30,11 +29,13 @@
 			height: 750px;
 			width: 200px;
 			margin-top: 100px;
+			overflow-y: auto;
+			direction: rtl;
 		}
 
 		#ref-img {
 			background-color: white;
-			margin-left: 100px;
+			margin-left: 50px;
 			float: left;
 			height: 750px;
 			margin-top: 100px;
@@ -129,6 +130,26 @@
 		#e13 {
 			margin-left: 50px;
 			float: left;
+		}
+
+		/* width */
+		::-webkit-scrollbar {
+		width: 10px;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		background: #f1f1f1;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		background: #888;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		background: #555;
 		}
 	</style>
 
@@ -246,20 +267,23 @@
 			// Set up the mandala interactivity.
 			init();
 		}
-
 	</script>
+
 </head>
 
 <body>
 
-	{% load static %} <img id="ref-img" src="{% static "coloring/images/ref_test.png" %}" />
-	<canvas id="myCanvas" width="750px" height="750px" style="float: left"></canvas>
 	<div id="ref-list-container">
 		{% load static %} <img class="ref-option" src="{% static "coloring/images/pikachu.png" %}" />
 		{% load static %} <img class="ref-option" src="{% static "coloring/images/dunsparce.png" %}" />
 		{% load static %} <img class="ref-option" src="{% static "coloring/images/ninetales.png" %}" />
 		{% load static %} <img class="ref-option" src="{% static "coloring/images/fletchinder.png" %}" />
+		{% load static %} <img class="ref-option" src="{% static "coloring/images/charmander.png" %}" />
+		{% load static %} <img class="ref-option" src="{% static "coloring/images/bulbasaur.png" %}" />
+		{% load static %} <img class="ref-option" src="{% static "coloring/images/cloyster.png" %}" />
 	</div>
+	{% load static %} <img id="ref-img" src="{% static "coloring/images/ref_test.png" %}" />
+	<canvas id="myCanvas" width="750px" height="750px" style="float: left"></canvas>
 
 	<div id = "strokesetter">
 		<div id = "s1">
@@ -291,10 +315,12 @@
 			<img src="{% static './coloring/images/e13.jpg' %}" width="45"/>
 		</div>
 	</div>
+
 	<script>
 		$(".ref-option" ).draggable({
 			addClasses: false,
-			revert: true
+			revert: true,
+			helper: "clone"
 		});
 		$("#ref-img" ).droppable({
   			accept: ".ref-option",
@@ -303,6 +329,7 @@
 			}
 		});
 	</script>
+
 </body>
 
 </html>
