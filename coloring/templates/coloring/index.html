@@ -6,11 +6,43 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<title>P3 Coloring</title>
 
-	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'coloring/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
 
 	<style type="text/css">
+
+		body {
+			background-image: url("/static/coloring/images/bg.jpg");
+			background-repeat: repeat;
+		}
+
+		.ref-option {
+			height: 175px;
+			width: 175px;
+			border-style: dashed;
+			background-color: white;
+		}
+
+		#ref-list-container {
+			margin-left: 25px;
+			float: left;
+			height: 750px;
+			width: 200px;
+			margin-top: 100px;
+		}
+
+		#ref-img {
+			background-color: white;
+			margin-left: 100px;
+			float: left;
+			height: 750px;
+			margin-top: 100px;
+			border-style: solid;
+		}
+
 		#color-palette {
+			margin-top: 10px;
 			width: 300px;
 			background-color: #f1f1f1;
 			display: flex;
@@ -33,10 +65,14 @@
 		    padding-right: 0;
 		    margin-left: auto;
 		    margin-right: auto;
+			margin-top: 100px;
 		    display: block;
+			border-style: solid;
+			background-color: white;
 		}
 
 		#strokesetter {
+			margin-top: 10px;
     		margin-left: 42.5%;
     		width: 15%;
     		height: 25px;
@@ -97,7 +133,6 @@
 	</style>
 
 	<script type="text/javascript" canvas="canvas">
-
 
 		window.onload = function() {
 			$(document).ready(function() {
@@ -217,7 +252,15 @@
 
 <body>
 
-	<canvas id="myCanvas" width="750px" height="750px"></canvas>
+	{% load static %} <img id="ref-img" src="{% static "coloring/images/ref_test.png" %}" />
+	<canvas id="myCanvas" width="750px" height="750px" style="float: left"></canvas>
+	<div id="ref-list-container">
+		{% load static %} <img class="ref-option" src="{% static "coloring/images/pikachu.png" %}" />
+		{% load static %} <img class="ref-option" src="{% static "coloring/images/dunsparce.png" %}" />
+		{% load static %} <img class="ref-option" src="{% static "coloring/images/ninetales.png" %}" />
+		{% load static %} <img class="ref-option" src="{% static "coloring/images/fletchinder.png" %}" />
+	</div>
+
 	<div id = "strokesetter">
 		<div id = "s1">
 			<img src="{% static './coloring/images/1.jpg' %}" width="45"/>
@@ -236,9 +279,6 @@
 		</div>
 	</div>
 	<div id="color-palette"></div>
-	<!-- <div id = "swtext">
-		Stroke width
-	</div> -->
 
 	<div id = "erasersetter">
 		<div id = "e3">
@@ -251,6 +291,18 @@
 			<img src="{% static './coloring/images/e13.jpg' %}" width="45"/>
 		</div>
 	</div>
+	<script>
+		$(".ref-option" ).draggable({
+			addClasses: false,
+			revert: true
+		});
+		$("#ref-img" ).droppable({
+  			accept: ".ref-option",
+			drop: function(event, ui) {
+				$(this).attr("src", ui.draggable.attr("src"));
+			}
+		});
+	</script>
 </body>
 
 </html>
