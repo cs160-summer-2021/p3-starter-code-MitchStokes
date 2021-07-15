@@ -16,11 +16,8 @@
 			display: flex;
 			flex-wrap: wrap;
 			position: absolute;
+			margin-left: 70%;
 			top: 0;
-		}
-
-		#s1 {
-			 
 		}
 		.swatch {
 			width: 24px;
@@ -40,22 +37,27 @@
 		}
 
 		#strokesetter {
-			margin-top: 10px;
     		margin-left: 42.5%;
     		width: 15%;
     		height: 25px;
+			top: 0;
+			position: absolute;
 		}
 
 		#erasersetter {
 			margin-top: 10px;
-    		margin-left: 42.5%;
+    		margin-left: 25%;
     		width: 15%;
     		height: 50px;
+			top: 0;
+			position: absolute;
 		}
 
 		#swtext {
 			margin-top: 10px;
 			text-align: center;
+			top: 0;
+			position: absolute;
 		}
 		#eraser {
 			margin-top: 20px;
@@ -215,10 +217,6 @@
 <body>
 
 	<canvas id="myCanvas" width="750px" height="750px"></canvas>
-	<div id="color-palette"></div>
-	<div id = "swtext">
-		Stroke width
-	</div>
 	<div id = "strokesetter">
 		<div id = "s1">
 			<img src="{% static './coloring/images/1.jpg' %}" width="45"/>
@@ -236,9 +234,11 @@
 			<img src="{% static './coloring/images/20.jpg' %}" width="45"/>
 		</div>
 	</div>
-	<div id = "eraser">
-		Eraser Size
-	</div>
+	<div id="color-palette"></div>
+	<!-- <div id = "swtext">
+		Stroke width
+	</div> -->
+
 	<div id = "erasersetter">
 		<div id = "e3">
 			<img src="{% static './coloring/images/e3.jpg' %}" width="45"/>
